@@ -1,0 +1,27 @@
+﻿using DefaultNamespace;
+using GameBoard.Grid;
+using GameBoard.Level;
+using GameBoard.Level.Settings;
+using UnityEngine;
+using VContainer;
+using VContainer.Unity;
+
+namespace Installer
+{
+    //DI Instaler
+    public class GameplaySceneInstaller : LifetimeScope
+    {
+        [SerializeField] private CameraContainer _cameraContainer;
+        [SerializeField] private LevelTexturesDatabase _levelTexturesDatabase;
+        
+        protected override void Configure(IContainerBuilder builder)
+        {
+            builder.RegisterComponent(_cameraContainer).AsSelf();
+            builder.Register<TextureLevelParserStrategy>(Lifetime.Singleton)
+                .As<ILevelParser>()
+                .WithParameter(_levelTexturesDatabase);
+            builder.Register<GridScaler>(Lifetime.Singleton).AsSelf();
+            builder.Register<GridManager>(Lifetime.Singleton).AsSelf();
+        }
+    }
+}

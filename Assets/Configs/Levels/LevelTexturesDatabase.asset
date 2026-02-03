@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4595acdc60a4c2d9941470f8ee2346e, type: 3}
+  m_Name: LevelTexturesDatabase
+  m_EditorClassIdentifier: 
+  _levelTextures:
+  - {fileID: 2800000, guid: fe6da913463d8b045adbf7b579bddc2a, type: 3}
+  - {fileID: 2800000, guid: 45615efcf987b644cb8c3ac759d00eea, type: 3}
+  - {fileID: 2800000, guid: d3892a45aa12e1c4aa12aaf72f181b99, type: 3}
+  _levelTypeToColors:
+  - BlockType: 1
+    Color: {r: 0, g: 0, b: 1, a: 1}
+  - BlockType: 2
+    Color: {r: 1, g: 0, b: 0, a: 1}

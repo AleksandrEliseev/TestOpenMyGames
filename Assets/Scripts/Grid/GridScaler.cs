@@ -1,0 +1,56 @@
+﻿using DefaultNamespace;
+using UnityEngine;
+using VContainer;
+
+namespace GameBoard.Grid
+{
+    public class GridScaler
+    {
+        private readonly CameraContainer _camera;
+
+        [Inject]
+        public GridScaler(CameraContainer camera)
+        {
+            _camera = camera;
+        }
+
+        public void Scale(GridModel grid, float topPadding, float bottomPadding, float sidePadding)
+        {
+            Camera camera = _camera.GameCamera;
+            float screenHeight = camera.orthographicSize * 2;
+            float screenWidth = screenHeight * camera.aspect;
+
+            float availableHeight = screenHeight - (topPadding + bottomPadding);
+            float availableWidth = screenWidth - (sidePadding * 2);
+
+            float cellWidthForWidth = availableWidth / grid.Size.x;
+            float cellHeightForHeight = availableHeight / grid.Size.y;
+
+            float cellSize = Mathf.Min(cellWidthForWidth, cellHeightForHeight);
+
+            grid.CellSize = new Vector2(cellSize, cellSize);
+
+            float totalGridWidth = grid.Size.x * cellSize;
+            float totalGridHeight = grid.Size.y * cellSize;
+
+            float xOffset = (availableWidth - totalGridWidth) / 2;
+            float yOffset = (availableHeight - totalGridHeight) / 2;
+
+            Vector2 startPosition = new Vector2(
+                -screenWidth / 2 + sidePadding + xOffset + cellSize / 2,
+                -screenHeight / 2 + bottomPadding + yOffset + cellSize / 2
+            );
+
+            for (int y = 0; y < grid.Size.y; y++)
+            {
+                for (int x = 0; x < grid.Size.x; x++)
+                {
+                    int index = y * grid.Size.x + x;
+                    GridCell cell = grid.Cells[index];
+
+                    cell.WorldPosition = startPosition + new Vector2(x * cellSize, y * cellSize);
+                }
+            }
+        }
+    }
+}
