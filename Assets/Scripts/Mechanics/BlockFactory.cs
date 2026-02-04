@@ -6,7 +6,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using VContainer.Unity;
 
-namespace GameBoard.Mechanics
+namespace Mechanics
 {
     public class BlockFactory : IStartable
     {

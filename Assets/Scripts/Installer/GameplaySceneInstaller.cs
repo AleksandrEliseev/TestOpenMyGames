@@ -1,10 +1,10 @@
-﻿using DefaultNamespace;
-using GameBoard.Configuration;
+﻿using GameBoard.Configuration;
 using GameBoard.Grid;
-using GameBoard.Level;
 using GameBoard.Level.Settings;
+using GameCamera;
 using Input;
-using GameBoard.Mechanics;
+using Mechanics;
+using Level;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

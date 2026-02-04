@@ -3,7 +3,7 @@ using GameBoard.Level.Settings;
 using UnityEngine;
 using VContainer;
 
-namespace GameBoard.Level
+namespace Level
 {
     public class TextureLevelParserStrategy : ILevelParser
     {
@@ -42,7 +42,7 @@ namespace GameBoard.Level
                 for (int x = 0; x < newWidth; x++)
                 {
                     int newIndex = y * newWidth + x;
-                    
+
                     // Set border blocks to None
                     if (x == 0 || x == newWidth - 1)
                     {

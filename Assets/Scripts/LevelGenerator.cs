@@ -1,6 +1,6 @@
 ﻿using Block;
 using GameBoard.Grid;
-using GameBoard.Mechanics;
+using Mechanics;
 using UnityEngine;
 using VContainer;
 

@@ -1,7 +1,7 @@
 ﻿using Block;
 using UnityEngine;
 
-namespace GameBoard.Level
+namespace Level
 {
     public struct LevelModel
     {

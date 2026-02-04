@@ -1,4 +1,4 @@
-﻿namespace GameBoard.Level
+﻿namespace Level
 {
     public interface ILevelParser
     {

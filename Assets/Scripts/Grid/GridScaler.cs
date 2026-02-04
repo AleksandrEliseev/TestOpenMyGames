@@ -1,4 +1,4 @@
-﻿using DefaultNamespace;
+﻿using GameCamera;
 using UnityEngine;
 using VContainer;
 

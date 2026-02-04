@@ -1,4 +1,4 @@
-﻿using GameBoard.Level;
+﻿using Level;
 using UnityEngine;
 using VContainer;
 

@@ -10,7 +10,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace GameBoard.Mechanics
+namespace Mechanics
 {
     public class SwapMechanic : IStartable, IDisposable
     {

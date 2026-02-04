@@ -5,7 +5,7 @@ using GameBoard.Grid;
 using UnityEngine;
 using VContainer;
 
-namespace GameBoard.Mechanics
+namespace Mechanics
 {
     public class MatchMechanic
     {

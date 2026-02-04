@@ -1,7 +1,7 @@
 ﻿using System;
 using Block;
 using Core;
-using DefaultNamespace;
+using GameCamera;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
