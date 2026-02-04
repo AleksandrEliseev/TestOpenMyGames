@@ -51,8 +51,11 @@ public class LevelGenerator : MonoBehaviour
             }
             if (blockView != null)
             {
+                blockView.Init(cell.GridPosition); // Init grid position
                 blockView.SetPosition(cell.WorldPosition);
                 blockView.SetSize(grid.CellSize);
+                
+                cell.BlockView = blockView;
             }
         }
     }

@@ -13,5 +13,7 @@ namespace GameBoard.Grid
         public GridCell RightNeighbor;
         public GridCell TopNeighbor;
         public GridCell BottomNeighbor;
+        
+        public BlockView BlockView;
     }
 }

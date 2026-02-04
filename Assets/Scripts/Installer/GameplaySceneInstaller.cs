@@ -2,6 +2,8 @@
 using GameBoard.Grid;
 using GameBoard.Level;
 using GameBoard.Level.Settings;
+using Input;
+using GameBoard.Mechanics;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -23,6 +25,9 @@ namespace Installer
                 .WithParameter(_levelTexturesDatabase);
             builder.Register<GridScaler>(Lifetime.Singleton).AsSelf().WithParameter(_gridTransform);
             builder.Register<GridManager>(Lifetime.Singleton).AsSelf();
+
+            builder.Register<InputSystem>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<SwapMechanic>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

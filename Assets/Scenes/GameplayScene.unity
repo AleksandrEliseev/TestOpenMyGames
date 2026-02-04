@@ -375,6 +375,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1969478590}
+  - {fileID: 0}
   _cameraContainer: {fileID: 519420033}
   _levelTexturesDatabase: {fileID: 11400000, guid: 3e917e1935d397e4bb62b9d73a23571f, type: 2}
   _gridTransform: {fileID: 742333798}

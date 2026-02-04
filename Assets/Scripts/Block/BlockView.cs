@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using UnityEngine;
 
 namespace Block
 {
@@ -7,9 +10,30 @@ namespace Block
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private BlockType _blockType;
 
+        public BlockType Type => _blockType;
+
+        public Vector2Int GridPosition { get; private set; }
+
+        public void Init(Vector2Int gridPosition)
+        {
+            GridPosition = gridPosition;
+        }
+        
+        public void UpdateGridPosition(Vector2Int gridPosition)
+        {
+            GridPosition = gridPosition;
+        }
+
         public void SetPosition(Vector2 position)
         {
             transform.position = position;
+        }
+
+        public UniTask MoveTo(Vector2 targetPosition, float duration, CancellationToken cancellationToken)
+        {
+             return transform.DOMove(targetPosition, duration)
+                 .SetEase(Ease.OutQuad)
+                 .ToUniTask(cancellationToken: cancellationToken);
         }
 
         public void SetSize(Vector2 size)
