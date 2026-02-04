@@ -1,35 +1,43 @@
 ﻿using Block;
 using GameBoard.Grid;
+using GameBoard.Level.Settings;
 using Mechanics;
 using UnityEngine;
 using VContainer;
 
-public class LevelGenerator : MonoBehaviour
+public interface IGridGenerator
 {
-    [SerializeField] private int _levelNumber = 1;
-    [SerializeField] private float _topPadding = 1.0f;
-    [SerializeField] private float _bottomPadding = 1.0f;
-    [SerializeField] private float _sidePadding = 0.5f;
+}
 
-    private GridManager _gridManager;
-    private GridScaler _gridScaler;
-    private BlockFactory _blockFactory;
+public class GridGenerator
+{
+    private readonly GridManager _gridManager;
+    private readonly GridScaler _gridScaler;
+    private readonly BlockFactory _blockFactory;
+    private readonly GridConfig _gridConfig;
+
 
     [Inject]
-    public void Construct(GridManager gridManager, GridScaler gridScaler, BlockFactory blockFactory)
+    public GridGenerator(
+        GridManager gridManager,
+        GridScaler gridScaler,
+        BlockFactory blockFactory,
+        GridConfig gridConfig
+    )
     {
         _gridManager = gridManager;
         _gridScaler = gridScaler;
         _blockFactory = blockFactory;
+        _gridConfig = gridConfig;
     }
 
-    private void Start()
+    public void GenerateGrid(int levelNumber)
     {
-        Debug.Log($"LevelGenerator: Generating level {_levelNumber}");
-        
-        GridModel grid = _gridManager.LoadLevel(_levelNumber);
-        
-        _gridScaler.Scale(grid, _topPadding, _bottomPadding, _sidePadding);
+        Debug.Log($"LevelGenerator: Generating level {levelNumber}");
+
+        GridModel grid = _gridManager.LoadLevel(levelNumber);
+
+        _gridScaler.Scale(grid, _gridConfig.TopPadding, _gridConfig.BottomPadding, _gridConfig.SidePadding);
 
         GenerateBlocks(grid);
     }
@@ -53,7 +61,7 @@ public class LevelGenerator : MonoBehaviour
                 blockView.Init(cell.GridPosition); // Init grid position
                 blockView.SetPosition(cell.WorldPosition);
                 blockView.SetSize(grid.CellSize);
-                
+
                 cell.BlockView = blockView;
             }
         }

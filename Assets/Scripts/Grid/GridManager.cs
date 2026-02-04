@@ -1,23 +1,38 @@
 ﻿using Level;
+using SaveLoadService;
 using UnityEngine;
 using VContainer;
 
 namespace GameBoard.Grid
 {
-    public class GridManager 
+    public class GridManager
     {
         private readonly ILevelParser _levelParser;
+        private readonly ILoadService _loadService;
         public GridModel Grid { get; private set; }
 
         [Inject]
-        public GridManager(ILevelParser levelParser)
+        public GridManager(
+            ILevelParser levelParser,
+            ILoadService loadService
+        )
         {
             _levelParser = levelParser;
+            _loadService = loadService;
         }
 
         public GridModel LoadLevel(int levelNumber)
         {
-            LevelModel levelModel = _levelParser.ParseLevel(levelNumber);
+            if (_loadService.TryToLoadLevel(levelNumber, out LevelModel levelModel))
+            {
+                Debug.Log($"Loading level {levelNumber}");
+            }
+            else
+            {
+                levelModel = _levelParser.ParseLevel(levelNumber);
+                Debug.Log($"Parsed level {levelNumber} from resources");
+            }
+
             Vector2Int gridSize = new Vector2Int(levelModel.GridSize.x, levelModel.GridSize.y);
 
             Grid = new GridModel(gridSize);
@@ -55,7 +70,7 @@ namespace GameBoard.Grid
                 if (y < gridSize.y - 1)
                     сell.TopNeighbor = Grid.Cells[i + gridSize.x];
             }
-   
+
             return Grid;
         }
     }

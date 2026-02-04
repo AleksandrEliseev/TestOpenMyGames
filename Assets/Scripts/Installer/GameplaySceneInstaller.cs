@@ -5,6 +5,7 @@ using GameCamera;
 using Input;
 using Mechanics;
 using Level;
+using SaveLoadService;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -17,8 +18,10 @@ namespace Installer
     public class GameplaySceneInstaller : LifetimeScope
     {
         [SerializeField] private CameraContainer _cameraContainer;
+        
         [SerializeField] private LevelTexturesDatabase _levelTexturesDatabase;
         [SerializeField] private BlockConfig _blockConfig;
+        [SerializeField] private GridConfig _gridConfig;
         
         [SerializeField] private Transform _gridTransform;
         [SerializeField] private Transform _blockPoolContainer;
@@ -27,6 +30,10 @@ namespace Installer
         {
             builder.RegisterComponent(_cameraContainer)
                 .AsSelf();
+
+            builder
+                .Register<PrefsSaveLoadService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
             
             builder.Register<TextureLevelParserStrategy>(Lifetime.Singleton)
                 .As<ILevelParser>()
@@ -35,6 +42,10 @@ namespace Installer
             builder.Register<GridScaler>(Lifetime.Singleton)
                 .AsSelf()
                 .WithParameter(_gridTransform);
+
+            builder.Register<GridGenerator>(Lifetime.Singleton)
+                .As<IGridGenerator>()
+                .WithParameter(_gridConfig);
             
             builder.Register<GridManager>(Lifetime.Singleton)
                 .AsSelf();
