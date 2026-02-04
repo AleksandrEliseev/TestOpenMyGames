@@ -26,6 +26,8 @@ namespace Installer
             builder.Register<GridScaler>(Lifetime.Singleton).AsSelf().WithParameter(_gridTransform);
             builder.Register<GridManager>(Lifetime.Singleton).AsSelf();
 
+            builder.Register<MatchMechanic>(Lifetime.Singleton).AsSelf();
+            
             builder.Register<InputSystem>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SwapMechanic>(Lifetime.Singleton).AsImplementedInterfaces();
         }

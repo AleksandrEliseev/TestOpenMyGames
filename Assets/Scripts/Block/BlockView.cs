@@ -29,11 +29,18 @@ namespace Block
             transform.position = position;
         }
 
-        public UniTask MoveTo(Vector2 targetPosition, float duration,bool isDown, CancellationToken cancellationToken)
+        public UniTask MoveTo(Vector2 targetPosition, float duration, bool isDown, CancellationToken cancellationToken)
         {
             Ease easeType = isDown ? Ease.InQuad : Ease.OutQuad;
              return transform.DOMove(targetPosition, duration)
                  .SetEase(easeType)
+                 .ToUniTask(cancellationToken: cancellationToken);
+        }
+
+        public UniTask AnimateDestruction(CancellationToken cancellationToken)
+        {
+             return transform.DOScale(Vector3.zero, 0.2f)
+                 .SetEase(Ease.InBack)
                  .ToUniTask(cancellationToken: cancellationToken);
         }
 

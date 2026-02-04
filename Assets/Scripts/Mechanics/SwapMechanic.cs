@@ -16,16 +16,22 @@ namespace GameBoard.Mechanics
     {
         private readonly GridManager _gridManager;
         private readonly IInputSystem _inputSystem;
+        private readonly MatchMechanic _matchMechanic;
         private CancellationTokenSource _cts;
         private bool _isAnimating;
 
         private const float MoveDuration = 0.2f;
 
         [Inject]
-        public SwapMechanic(GridManager gridManager, IInputSystem inputSystem)
+        public SwapMechanic(
+            GridManager gridManager, 
+            IInputSystem inputSystem,
+            MatchMechanic matchMechanic
+            )
         { 
             _gridManager = gridManager;
             _inputSystem = inputSystem;
+            _matchMechanic = matchMechanic;
         }
 
         public void Start()
@@ -72,11 +78,24 @@ namespace GameBoard.Mechanics
                     await MoveBlock(startCell, targetCell, token);
                 }
 
-                await ApplyGravity(token);
+                await ProcessGravityAndMatches(token);
             }
             finally
             {
                 _isAnimating = false;
+            }
+        }
+
+        private async UniTask ProcessGravityAndMatches(CancellationToken token)
+        {
+            while (true)
+            {
+                await ApplyGravity(token);
+                
+                bool hasMatches = await _matchMechanic.CheckAndProcessMatches(token);
+                
+                if (!hasMatches) 
+                    break;
             }
         }
 
