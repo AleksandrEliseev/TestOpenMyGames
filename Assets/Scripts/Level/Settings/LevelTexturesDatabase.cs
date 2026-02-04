@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameBoard.Level.Settings
 {
-    [CreateAssetMenu(fileName = "LevelTexturesDatabase", menuName = "Game/Level Textures Database")]
+    [CreateAssetMenu(fileName = "LevelTexturesDatabase", menuName = "Config/Level Textures Database")]
     public class LevelTexturesDatabase : ScriptableObject
     {
         [SerializeField] private Texture2D[] _levelTextures;

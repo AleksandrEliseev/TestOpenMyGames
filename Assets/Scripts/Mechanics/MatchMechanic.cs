@@ -10,11 +10,13 @@ namespace GameBoard.Mechanics
     public class MatchMechanic
     {
         private readonly GridManager _gridManager;
+        private readonly BlockFactory _blockFactory;
 
         [Inject]
-        public MatchMechanic(GridManager gridManager)
+        public MatchMechanic(GridManager gridManager, BlockFactory blockFactory)
         {
             _gridManager = gridManager;
+            _blockFactory = blockFactory;
         }
 
         public async UniTask<bool> CheckAndProcessMatches(System.Threading.CancellationToken token)
@@ -110,9 +112,8 @@ namespace GameBoard.Mechanics
             if (block != null)
             {
                 await block.AnimateDestruction(token);
-                Object.Destroy(block.gameObject);
+                _blockFactory.ReturnBlock(block);
             }
         }
     }
 }
-

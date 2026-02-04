@@ -4,11 +4,9 @@ using VContainer;
 
 namespace GameBoard.Grid
 {
-    public class GridManager : MonoBehaviour
+    public class GridManager 
     {
         private readonly ILevelParser _levelParser;
-
-
         public GridModel Grid { get; private set; }
 
         [Inject]
