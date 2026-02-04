@@ -23,7 +23,7 @@ namespace GameBoard.Mechanics
 
         [Inject]
         public SwapMechanic(GridManager gridManager, IInputSystem inputSystem)
-        {
+        { 
             _gridManager = gridManager;
             _inputSystem = inputSystem;
         }
@@ -71,11 +71,47 @@ namespace GameBoard.Mechanics
                 {
                     await MoveBlock(startCell, targetCell, token);
                 }
+
+                await ApplyGravity(token);
             }
             finally
             {
                 _isAnimating = false;
             }
+        }
+
+        private async UniTask ApplyGravity(CancellationToken token)
+        {
+             var grid = _gridManager.Grid;
+             List<UniTask> gravityTasks = new List<UniTask>();
+ 
+             for (int x = 0; x < grid.Size.x; x++)
+             {
+                 int writeY = 0;
+                 for (int y = 0; y < grid.Size.y; y++)
+                 {
+                     GridCell currentCell = GetCellAt(new Vector2Int(x, y));
+                     
+                     if (currentCell.BlockView != null)
+                     {
+                         if (y != writeY)
+                         {
+                             GridCell targetCell = GetCellAt(new Vector2Int(x, writeY));
+                             
+                             UpdateCellData(targetCell, currentCell.BlockView);
+                             UpdateCellData(currentCell, null);
+                             
+                             gravityTasks.Add(AnimateMove(targetCell.BlockView, targetCell,true, token));
+                         }
+                         writeY++;
+                     }
+                 }
+             }
+ 
+             if (gravityTasks.Count > 0)
+             {
+                 await UniTask.WhenAll(gravityTasks);
+             }
         }
         
         private GridCell GetCellAt(Vector2Int position)
@@ -111,8 +147,8 @@ namespace GameBoard.Mechanics
             UpdateCellData(cell2, block1);
             
             await UniTask.WhenAll(
-                AnimateMove(block1, cell2, token),
-                AnimateMove(block2, cell1, token)
+                AnimateMove(block1, cell2,false, token),
+                AnimateMove(block2, cell1,false, token)
             );
         }
 
@@ -123,7 +159,7 @@ namespace GameBoard.Mechanics
             UpdateCellData(toCell, block);
             UpdateCellData(fromCell, null);
             
-            await AnimateMove(block, toCell, token);            
+            await AnimateMove(block, toCell,false, token);            
         }
 
         private void UpdateCellData(GridCell cell, BlockView block)
@@ -132,13 +168,16 @@ namespace GameBoard.Mechanics
             cell.BlockType = block != null ? block.Type : BlockType.None;
         }
 
-        private UniTask AnimateMove(BlockView block, GridCell targetCell, CancellationToken token)
+        private UniTask AnimateMove(BlockView block, GridCell targetCell,bool isDown, CancellationToken token)
         {
             if (block == null)
                 return UniTask.CompletedTask;
 
+            float distance = Vector2.Distance(block.GridPosition, targetCell.GridPosition);
+            float duration = MoveDuration * distance;
+
             block.UpdateGridPosition(targetCell.GridPosition);
-            return block.MoveTo(targetCell.WorldPosition, MoveDuration, token);
+            return block.MoveTo(targetCell.WorldPosition, duration,isDown, token);
         }
     }
 }
