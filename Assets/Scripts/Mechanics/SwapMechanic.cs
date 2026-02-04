@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Block;
@@ -51,6 +51,19 @@ namespace Mechanics
         {
             if (_isAnimating) 
                 return;
+
+            if (direction == Direction.Up)
+            {
+                GridCell startCell = GetCellAt(block.GridPosition);
+                if (startCell != null)
+                {
+                    GridCell targetCell = GetTargetCell(startCell, direction);
+                    if (targetCell != null && targetCell.BlockView == null)
+                    {
+                        return;
+                    }
+                }
+            }
             
             SwapAnimation(block,direction, _cts.Token).Forget();
         }
