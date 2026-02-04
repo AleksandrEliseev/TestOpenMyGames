@@ -8,6 +8,8 @@ using Level;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using UI.BaseScreen;
+using UI.GameplayScreen;
 
 namespace Installer
 {
@@ -51,6 +53,11 @@ namespace Installer
             
             builder.Register<SwapMechanic>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
+
+            #region UI
+            builder.Register<GameplayScreenPresenterFactory>(Lifetime.Singleton).AsSelf();
+            #endregion
+          
         }
     }
 }
