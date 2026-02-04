@@ -13,6 +13,7 @@ namespace Installer
     {
         [SerializeField] private CameraContainer _cameraContainer;
         [SerializeField] private LevelTexturesDatabase _levelTexturesDatabase;
+        [SerializeField] private Transform _gridTransform;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -20,7 +21,7 @@ namespace Installer
             builder.Register<TextureLevelParserStrategy>(Lifetime.Singleton)
                 .As<ILevelParser>()
                 .WithParameter(_levelTexturesDatabase);
-            builder.Register<GridScaler>(Lifetime.Singleton).AsSelf();
+            builder.Register<GridScaler>(Lifetime.Singleton).AsSelf().WithParameter(_gridTransform);
             builder.Register<GridManager>(Lifetime.Singleton).AsSelf();
         }
     }

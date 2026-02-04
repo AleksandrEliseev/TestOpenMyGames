@@ -7,11 +7,16 @@ namespace GameBoard.Grid
     public class GridScaler
     {
         private readonly CameraContainer _camera;
+        private readonly Transform _gridTransform;
 
         [Inject]
-        public GridScaler(CameraContainer camera)
+        public GridScaler(
+            CameraContainer camera,
+            Transform gridTransform
+        )
         {
             _camera = camera;
+            _gridTransform = gridTransform;
         }
 
         public void Scale(GridModel grid, float topPadding, float bottomPadding, float sidePadding)
@@ -31,10 +36,13 @@ namespace GameBoard.Grid
             grid.CellSize = new Vector2(cellSize, cellSize);
 
             float totalGridWidth = grid.Size.x * cellSize;
-            float totalGridHeight = grid.Size.y * cellSize;
 
             float xOffset = (availableWidth - totalGridWidth) / 2;
-            float yOffset = (availableHeight - totalGridHeight) / 2;
+            float yOffset =
+                Mathf.Clamp(_gridTransform.position.y + screenHeight / 2f - bottomPadding - cellSize / 2f,
+                    0.05f * screenHeight,
+                    0.25f * screenHeight);
+
 
             Vector2 startPosition = new Vector2(
                 -screenWidth / 2 + sidePadding + xOffset + cellSize / 2,
