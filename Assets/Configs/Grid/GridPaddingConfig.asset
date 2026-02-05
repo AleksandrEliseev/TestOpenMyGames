@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GridPaddingConfig
   m_EditorClassIdentifier: 
   _topPadding: 1
-  _bottomPadding: 1
-  _sidePadding: 0.5
+  _bottomPadding: 0
+  _sidePadding: 0

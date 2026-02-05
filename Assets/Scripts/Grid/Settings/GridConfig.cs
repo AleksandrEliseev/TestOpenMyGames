@@ -2,7 +2,7 @@
 
 
 
-namespace GameBoard.Level.Settings
+namespace Grid.Settings
 {
     [CreateAssetMenu(fileName = "GridPaddingConfig", menuName = "Configs/Grid Config", order = 0)]
     public class GridConfig : ScriptableObject

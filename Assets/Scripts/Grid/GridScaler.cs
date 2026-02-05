@@ -4,7 +4,11 @@ using VContainer;
 
 namespace GameBoard.Grid
 {
-    public class GridScaler
+    public interface IGridScaler
+    {
+        void Scale(GridModel grid, float topPadding, float bottomPadding, float sidePadding);
+    }
+    public class GridScaler: IGridScaler
     {
         private readonly CameraContainer _camera;
         private readonly Transform _gridTransform;

@@ -1,12 +1,14 @@
-﻿using Block;
+﻿using System;
+using Block;
 using UnityEngine;
 
 namespace Level
 {
+    [Serializable]
     public struct LevelModel
     {
-        public readonly Vector2Int GridSize;
-        public readonly BlockType[] BlockTypes;
+        public Vector2Int GridSize;
+        public BlockType[] BlockTypes;
 
         public LevelModel(Vector2Int gridSize, BlockType[] blockTypes)
         {

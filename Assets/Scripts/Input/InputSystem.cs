@@ -1,6 +1,5 @@
 ﻿using System;
 using Block;
-using Core;
 using GameCamera;
 using UnityEngine;
 using VContainer;
@@ -17,6 +16,7 @@ namespace Input
         private bool _isDragging;
 
         public event Action<BlockView, Direction> OnSwipe;
+        public bool IsInputEnabled { get; set; }
 
         [Inject]
         public void Construct(CameraContainer cameraContainer)
@@ -26,6 +26,9 @@ namespace Input
 
         public void Tick()
         {
+            if (!IsInputEnabled)
+                return;
+            
             if (UnityEngine.Input.touchCount > 0)
             {
                 Touch touch = UnityEngine.Input.GetTouch(0);

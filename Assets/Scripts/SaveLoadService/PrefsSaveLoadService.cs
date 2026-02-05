@@ -1,66 +1,100 @@
 ﻿using System;
 using Level;
 using UnityEngine;
+using VContainer;
 
 namespace SaveLoadService
 {
-    public class PrefsSaveLoadService : ILoadService, ISaveService,IDisposable
+    public class PrefsSaveLoadService : ILoadService, ISaveService, IDisposable
     {
-        private const string LevelKeyPrefix = "Level_";
+        private const string LevelDataKey = "LevelData";
 
-        public void SaveLevel(int levelNumber, LevelModel levelModel)
+        private SaveLevelData _saveLevelData;
+
+        [Inject]
+        public PrefsSaveLoadService()
         {
-            string serializedLevel = SerializeLevel(levelModel);
-            string key = LevelKeyPrefix + levelNumber;
-            PlayerPrefs.SetString(key, serializedLevel);
-            PlayerPrefs.Save();
-        }
-        public void ClearLevel(int levelNumber)
-        {
-            string key = LevelKeyPrefix + levelNumber;
-            if (PlayerPrefs.HasKey(key))
+            if (PlayerPrefs.HasKey(LevelDataKey))
             {
-                PlayerPrefs.DeleteKey(key);
+                _saveLevelData = DeserializeLevel<SaveLevelData>(PlayerPrefs.GetString(LevelDataKey));
             }
         }
 
-        public bool TryToLoadLevel(int levelNumber, out LevelModel levelModel)
+        public void UpdateLevelData(SaveLevelData saveLevelData)
         {
-            string key = LevelKeyPrefix + levelNumber;
-            if (PlayerPrefs.HasKey(key))
+            _saveLevelData = saveLevelData;
+        }
+        public void ClearLevelData()
+        {
+            if (PlayerPrefs.HasKey(LevelDataKey))
             {
-                string serializedLevel = PlayerPrefs.GetString(key);
-                levelModel = DeserializeLevel<LevelModel>(serializedLevel);
+                PlayerPrefs.DeleteKey(LevelDataKey);
+            }
+
+            _saveLevelData = null;
+        }
+        public int GetCurrentLevel()
+        {
+            return _saveLevelData == null ? 1 : _saveLevelData.LevelNumber;
+        }
+        public bool TryToLoadLevel(int levelNumber, out SaveLevelData levelData)
+        {
+            if (_saveLevelData != null && _saveLevelData.LevelNumber == levelNumber)
+            {
+                levelData = _saveLevelData;
+                Debug.Log($"Level {levelNumber} has been loaded.");
                 return true;
             }
 
-            levelModel = default;
+            levelData = null;
             return false;
         }
-
         private string SerializeLevel<T>(T levelModel)
         {
-            return JsonUtility.ToJson(levelModel);
+            var json = JsonUtility.ToJson(levelModel);
+            Debug.Log("Serialized Level Data: " + json);
+            return json;
         }
-
         private T DeserializeLevel<T>(string serializedLevel)
         {
             return JsonUtility.FromJson<T>(serializedLevel);
         }
+        private void SaveLevel(SaveLevelData levelModel)
+        {
+            string serializedLevel = SerializeLevel(levelModel);
+            string key = LevelDataKey;
+
+            PlayerPrefs.SetString(key, serializedLevel);
+            PlayerPrefs.Save();
+            Debug.Log(serializedLevel);
+        }
         public void Dispose()
         {
+            if (_saveLevelData != null)
+            {
+                SaveLevel(_saveLevelData);
+            }
+
             PlayerPrefs.Save();
         }
     }
 
     public interface ILoadService
     {
-        bool TryToLoadLevel(int levelNumber, out LevelModel levelModel);
+        int GetCurrentLevel();
+        bool TryToLoadLevel(int levelNumber, out SaveLevelData levelData);
     }
 
     public interface ISaveService
     {
-        void SaveLevel(int levelNumber, LevelModel levelModel);
-        void ClearLevel(int levelNumber);
+        void ClearLevelData();
+        void UpdateLevelData(SaveLevelData saveLevelData);
+    }
+
+    [Serializable]
+    public class SaveLevelData
+    {
+        public int LevelNumber;
+        public LevelModel LevelModel;
     }
 }

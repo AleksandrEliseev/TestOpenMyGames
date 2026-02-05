@@ -19,6 +19,9 @@ namespace GameBoard.Level.Settings
         {
             if (_levelTextures == null || _levelTextures.Length == 0)
                 return null;
+            
+            levelIndex--;
+            levelIndex %= _levelTextures.Length;
 
             if (levelIndex < 0 || levelIndex >= _levelTextures.Length)
                 return null;

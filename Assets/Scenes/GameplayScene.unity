@@ -411,11 +411,11 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 1969478590}
   - {fileID: 483403611}
   _cameraContainer: {fileID: 519420033}
   _levelTexturesDatabase: {fileID: 11400000, guid: 3e917e1935d397e4bb62b9d73a23571f, type: 2}
   _blockConfig: {fileID: 11400000, guid: 6329468294b9b664380d831d0bfd31f8, type: 2}
+  _gridConfig: {fileID: 11400000, guid: 8f277082d4a2bd94794f65eb85668c36, type: 2}
   _gridTransform: {fileID: 742333798}
   _blockPoolContainer: {fileID: 885405966}
 --- !u!4 &535747300
@@ -717,54 +717,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 483403615}
   m_SourcePrefab: {fileID: 100100000, guid: acd5eb84225062b458be09a40cd33452, type: 3}
---- !u!1 &1969478590
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1969478592}
-  - component: {fileID: 1969478591}
-  m_Layer: 0
-  m_Name: LevelGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1969478591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969478590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6caebe7241e84c34bc8c6ff7a3f7e88c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _levelNumber: 1
-  _topPadding: 0
-  _bottomPadding: 0
-  _sidePadding: 0
---- !u!4 &1969478592
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969478590}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -773,6 +725,5 @@ SceneRoots:
   - {fileID: 578545412}
   - {fileID: 468835762}
   - {fileID: 535747300}
-  - {fileID: 1969478592}
   - {fileID: 885405966}
   - {fileID: 1833793856}

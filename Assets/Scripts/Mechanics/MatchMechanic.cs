@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Block;
 using Cysharp.Threading.Tasks;
 using GameBoard.Grid;
@@ -7,19 +8,25 @@ using VContainer;
 
 namespace Mechanics
 {
-    public class MatchMechanic
+    public interface IMatchMechanic
     {
-        private readonly GridManager _gridManager;
-        private readonly BlockFactory _blockFactory;
+        UniTask<bool> CheckAndProcessMatches(CancellationToken token);
+    }
+    public class MatchMechanic : IMatchMechanic
+    {
+        private readonly IGridManager _gridManager;
+        private readonly IBlockFactory _blockFactory;
 
         [Inject]
-        public MatchMechanic(GridManager gridManager, BlockFactory blockFactory)
+        public MatchMechanic(IGridManager gridManager, IBlockFactory blockFactory)
         {
             _gridManager = gridManager;
             _blockFactory = blockFactory;
         }
+        
+        
 
-        public async UniTask<bool> CheckAndProcessMatches(System.Threading.CancellationToken token)
+        public async UniTask<bool> CheckAndProcessMatches(CancellationToken token)
         {
             var matches = FindMatches();
 
@@ -88,7 +95,7 @@ namespace Mechanics
             return null;
         }
 
-        private async UniTask DestroyBlocks(HashSet<BlockView> blocks, System.Threading.CancellationToken token)
+        private async UniTask DestroyBlocks(HashSet<BlockView> blocks, CancellationToken token)
         {
             List<UniTask> tasks = new List<UniTask>();
 
@@ -107,7 +114,7 @@ namespace Mechanics
             await UniTask.WhenAll(tasks);
         }
 
-        private async UniTask DestroyBlockAnimation(BlockView block, System.Threading.CancellationToken token)
+        private async UniTask DestroyBlockAnimation(BlockView block, CancellationToken token)
         {
             if (block != null)
             {

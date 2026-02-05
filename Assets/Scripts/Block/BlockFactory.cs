@@ -6,9 +6,14 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using VContainer.Unity;
 
-namespace Mechanics
+namespace Block
 {
-    public class BlockFactory : IStartable
+    public interface IBlockFactory
+    {
+        BlockView GetBlock(BlockType type);
+        void ReturnBlock(BlockView block);
+    }
+    public class BlockFactory : IStartable, IBlockFactory
     {
         private readonly Transform _poolContainer;
         private readonly BlockConfig _blockConfig;

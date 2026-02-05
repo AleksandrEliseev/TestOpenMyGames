@@ -12,6 +12,8 @@ namespace UI.GameplayScreen
         event Action OnRestartButtonClicked;
         event Action OmNextLevelButtonClicked;
         void SetLevelText(int level);
+        void SetActiveNextLevelButton(bool isActive);
+        void SetActiveRestartButton(bool isActive);
     }
 
     public class GameplayScreenView : BaseScreenView, IGameplayScreenView
@@ -41,15 +43,32 @@ namespace UI.GameplayScreen
         {
             _levelText.text = $"Level {level}";
         }
+        public void SetActiveNextLevelButton(bool isActive)
+        {
+            _nextLevelButton.gameObject.SetActive(isActive);
+        }
+        public void SetActiveRestartButton(bool isActive)
+        {
+            _restartButton.gameObject.SetActive(isActive);
+        }
+        
+        private void RestartButtonClicked()
+        {
+            OnRestartButtonClicked?.Invoke();
+        }
+        private void NextLevelButtonClicked()
+        {           
+            OmNextLevelButtonClicked?.Invoke();
+        }
         protected override void OnEnable()
         {
-            _restartButton.onClick.AddListener(() => OnRestartButtonClicked?.Invoke());
-            _nextLevelButton.onClick.AddListener(() => OmNextLevelButtonClicked?.Invoke());
+            _restartButton.onClick.AddListener(RestartButtonClicked);
+            _nextLevelButton.onClick.AddListener(NextLevelButtonClicked);
         }
         protected override void OnDisable()
         {
-            _restartButton.onClick.RemoveAllListeners();
-            _nextLevelButton.onClick.RemoveAllListeners();
+            _restartButton.onClick.RemoveListener(RestartButtonClicked);
+            _nextLevelButton.onClick.RemoveListener(NextLevelButtonClicked);
         }
     }
 }
