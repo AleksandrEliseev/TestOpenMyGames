@@ -94,9 +94,6 @@ namespace Installer
             builder.Register<GameLoopState>(Lifetime.Singleton)
                 .AsSelf();
             
-            builder.Register<RestartLevelState>(Lifetime.Singleton)
-                .AsSelf();
-            
             builder.Register<LevelCompleteState>(Lifetime.Singleton)
                 .AsSelf();
 

@@ -24,8 +24,7 @@ namespace Infrastructure.States
                 [typeof(BootstrapState)] = resolver.Resolve<BootstrapState>(),
                 [typeof(LoadLevelState)] = resolver.Resolve<LoadLevelState>(),
                 [typeof(GameLoopState)] = resolver.Resolve<GameLoopState>(),
-                [typeof(LevelCompleteState)] = resolver.Resolve<LevelCompleteState>(),
-                [typeof(RestartLevelState)] = resolver.Resolve<RestartLevelState>()
+                [typeof(LevelCompleteState)] = resolver.Resolve<LevelCompleteState>()
             };
 
             _gameplaySignals.OnStateChangeRequested += ChangeState;

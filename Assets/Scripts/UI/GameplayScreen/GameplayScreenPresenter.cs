@@ -26,23 +26,15 @@ namespace UI.GameplayScreen
 
             View.OnRestartButtonClicked += OnRestartClicked;
             View.OmNextLevelButtonClicked += OnNextLevelClicked;
-
-            _gameplaySignals.OnStartLevel += StartLevel;
+            
             _gameplaySignals.OnLevelChanged += SetLevelNumber;
-            _gameplaySignals.OnLevelCompleted += LevelCompleted;
         }
-        private void LevelCompleted()
-        {
-            View.SetActiveNextLevelButton(true);
-        }
+      
         private void SetLevelNumber(int levelNumber)
         {
             View.SetLevelText(levelNumber);
         }
-        private void StartLevel()
-        {
-            View.SetActiveNextLevelButton(false);
-        }
+      
 
         public override void Show()
         {
@@ -57,7 +49,7 @@ namespace UI.GameplayScreen
         private void OnRestartClicked()
         {
             Debug.Log("Restart clicked");
-           _gameplaySignals.RequestStateChange<RestartLevelState>();
+           _gameplaySignals.RequestStateChange<LoadLevelState>();
         }
 
         private void OnNextLevelClicked()
@@ -76,9 +68,7 @@ namespace UI.GameplayScreen
 
             if (_gameplaySignals != null)
             {
-                _gameplaySignals.OnStartLevel -= StartLevel;
                 _gameplaySignals.OnLevelChanged -= SetLevelNumber;
-                _gameplaySignals.OnLevelCompleted -= LevelCompleted;
             }
         }
     }

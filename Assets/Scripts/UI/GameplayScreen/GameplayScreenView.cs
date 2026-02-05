@@ -12,8 +12,6 @@ namespace UI.GameplayScreen
         event Action OnRestartButtonClicked;
         event Action OmNextLevelButtonClicked;
         void SetLevelText(int level);
-        void SetActiveNextLevelButton(bool isActive);
-        void SetActiveRestartButton(bool isActive);
     }
 
     public class GameplayScreenView : BaseScreenView, IGameplayScreenView
@@ -43,14 +41,7 @@ namespace UI.GameplayScreen
         {
             _levelText.text = $"Level {level}";
         }
-        public void SetActiveNextLevelButton(bool isActive)
-        {
-            _nextLevelButton.gameObject.SetActive(isActive);
-        }
-        public void SetActiveRestartButton(bool isActive)
-        {
-            _restartButton.gameObject.SetActive(isActive);
-        }
+       
         
         private void RestartButtonClicked()
         {

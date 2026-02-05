@@ -55,7 +55,9 @@ namespace Infrastructure.StateMachine.States
         public UniTask Exit(CancellationToken token)
         {
             _swapMechanic.OnSwapEnded -= OnSwapEnded;
-            
+            _swapMechanic.DestroyAnimations();
+            _gridManager.ClearGrid();
+            _saveService.ClearLevelData();
             return UniTask.CompletedTask;
         }
 
@@ -70,7 +72,7 @@ namespace Infrastructure.StateMachine.States
             if (_gridManager.IsAllCellClear())
             {
                 _inputSystem.IsInputEnabled = false;
-                _gameplaySignals.LevelCompleted();
+                _gameplaySignals.RequestStateChange<LevelCompleteState>();
             }
         }
     }

@@ -35,7 +35,6 @@ namespace Infrastructure.StateMachine.States
 
         public UniTask Exit(CancellationToken token)
         {
-            _gameplaySignals.StartLevel();
             return UniTask.CompletedTask;
         }
     }
