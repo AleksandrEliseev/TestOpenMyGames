@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 
-
 namespace Grid.Settings
 {
     [CreateAssetMenu(fileName = "GridPaddingConfig", menuName = "Configs/Grid Config", order = 0)]

@@ -65,7 +65,7 @@ namespace GameBoard.Grid
 
                 if (blockView != null)
                 {
-                    blockView.Init(cell.GridPosition);
+                    blockView.GridPosition = cell.GridPosition;
                     blockView.SetPosition(cell.WorldPosition);
                     blockView.SetSize(Grid.CellSize);
 

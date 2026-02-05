@@ -1,22 +1,25 @@
 ﻿using System.Threading;
+using Block.Animations;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Block
 {
     public class BlockView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
-        [SerializeField] private BlockType _blockType;
-
-        public BlockType Type => _blockType;
-
-        public Vector2Int GridPosition { get; private set; }
-
-        public void Init(Vector2Int gridPosition)
+        [SerializeField] private AnimatorComponent _animator;
+        
+        public BlockType Type { get; private set; }
+        public Vector2Int GridPosition { get;set; }
+        
+        public void Initialize(BlockType blockType, AnimatorOverrideController animatorController)
         {
-            GridPosition = gridPosition;
+            Type = blockType;
+            _animator.SetAnimatorController(animatorController);
+            _animator.PlayIdleAnimation(Random.Range(0f,0.5f));
         }
         
         public void UpdateGridPosition(Vector2Int gridPosition)
@@ -39,9 +42,7 @@ namespace Block
 
         public UniTask AnimateDestruction(CancellationToken cancellationToken)
         {
-             return transform.DOScale(Vector3.zero, 0.2f)
-                 .SetEase(Ease.InBack)
-                 .ToUniTask(cancellationToken: cancellationToken);
+            return _animator.PlayDestroyAnimation(cancellationToken);
         }
 
         public void SetSize(Vector2 size)

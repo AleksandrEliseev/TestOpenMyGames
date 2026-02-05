@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Block;
 using GameBoard.Configuration;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -18,14 +17,16 @@ namespace Block
         private readonly Transform _poolContainer;
         private readonly BlockConfig _blockConfig;
 
-        private readonly Dictionary<BlockType, Queue<BlockView>> _pools = new Dictionary<BlockType, Queue<BlockView>>();
+        private readonly Queue<BlockView> _pools ;
+     
         
-        private const int InitialPoolSizePerType = 10;
+        private const int InitialPoolSizePerType = 30;
         
         public BlockFactory(Transform poolContainer, BlockConfig blockConfig)
         {
             _poolContainer = poolContainer;
             _blockConfig = blockConfig;
+            _pools = new Queue<BlockView>(InitialPoolSizePerType);
         }
 
         public void Start()
@@ -53,15 +54,10 @@ namespace Block
 
         public BlockView GetBlock(BlockType type)
         {
-            if (!_pools.TryGetValue(type, out var pool))
+            if (_pools.Count > 0)
             {
-                pool = new Queue<BlockView>();
-                _pools[type] = pool;
-            }
-
-            if (pool.Count > 0)
-            {
-                BlockView block = pool.Dequeue();
+                BlockView block = _pools.Dequeue();
+                block.Initialize(type, _blockConfig.GetConfigByType(type).Animator);
                 block.gameObject.SetActive(true);
                 return block;
             }
@@ -75,18 +71,12 @@ namespace Block
             block.transform.SetParent(_poolContainer);
             block.transform.localScale = Vector3.one;
             
-            if (!_pools.TryGetValue(block.Type, out var pool))
-            {
-                pool = new Queue<BlockView>();
-                _pools[block.Type] = pool;
-            }
-            
-            pool.Enqueue(block);
+            _pools.Enqueue(block);
         }
 
         private BlockView CreateNewBlock(BlockType type)
         {
-            BlockView prefab = _blockConfig.GetBlockPrefab(type);
+            BlockView prefab = _blockConfig.BlockPrefab;
             if (prefab == null)
             {
                 Debug.LogError($"No prefab found for block type: {type}");

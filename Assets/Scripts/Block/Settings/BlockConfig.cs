@@ -8,18 +8,25 @@ namespace GameBoard.Configuration
     [CreateAssetMenu(fileName = "BlockConfig", menuName = "Configs/BlockConfig")]
     public class BlockConfig : ScriptableObject
     {
+        [SerializeField] private BlockView _blockPrefab;
+
         [SerializeField] private List<BlockConfigData> _blockConfigs;
-       
-        public BlockView GetBlockPrefab(BlockType type)
+
+        public BlockView BlockPrefab => _blockPrefab;
+
+
+        public BlockConfigData GetConfigByType(BlockType type)
         {
             foreach (var config in _blockConfigs)
             {
                 if (config.BlockType == type)
                 {
-                    return config.BlockPrefab;
+                    return config;
                 }
             }
-            throw new Exception($"Block prefab for type {type} not found in BlockConfig.");
+
+            Debug.LogWarning($"BlockConfig: No animator found for BlockType {type}");
+            return null;
         }
     }
 
@@ -27,7 +34,6 @@ namespace GameBoard.Configuration
     public class BlockConfigData
     {
         public BlockType BlockType;
-        public BlockView BlockPrefab;
+        public AnimatorOverrideController Animator;
     }
 }
-
