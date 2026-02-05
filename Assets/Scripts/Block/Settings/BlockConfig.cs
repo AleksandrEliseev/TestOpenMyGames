@@ -35,5 +35,6 @@ namespace GameBoard.Configuration
     {
         public BlockType BlockType;
         public AnimatorOverrideController Animator;
+        public Sprite InitialSprite;
     }
 }

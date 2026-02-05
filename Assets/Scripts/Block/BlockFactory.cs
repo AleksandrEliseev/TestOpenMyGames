@@ -13,16 +13,17 @@ namespace Block
         BlockView GetBlock(BlockType type);
         void ReturnBlock(BlockView block);
     }
+
     public class BlockFactory : IStartable, IBlockFactory
     {
         private readonly Transform _poolContainer;
         private readonly BlockConfig _blockConfig;
 
-        private readonly Queue<BlockView> _pools ;
-     
-        
+        private readonly Queue<BlockView> _pools;
+
+
         private const int InitialPoolSizePerType = 30;
-        
+
         [Inject]
         public BlockFactory(Transform poolContainer, BlockConfig blockConfig)
         {
@@ -51,6 +52,7 @@ namespace Block
                     }
                 }
             }
+
             Debug.Log("BlockFactory: Prewarm completed.");
         }
 
@@ -59,7 +61,7 @@ namespace Block
             if (_pools.Count > 0)
             {
                 BlockView block = _pools.Dequeue();
-                block.Initialize(type, _blockConfig.GetConfigByType(type).Animator);
+                block.Initialize(_blockConfig.GetConfigByType(type));
                 block.gameObject.SetActive(true);
                 return block;
             }
@@ -72,7 +74,6 @@ namespace Block
             block.gameObject.SetActive(false);
             block.transform.SetParent(_poolContainer);
             block.transform.localScale = Vector3.one;
-            
             _pools.Enqueue(block);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Infrastructure.States;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -16,6 +17,10 @@ namespace Infrastructure
 
         public void Start()
         {
+            #if UNITY_ANDROID
+            Application.targetFrameRate = 60;
+            #endif
+            
             _gameStateMachine.StartGame();
         }
     }

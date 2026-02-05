@@ -16,5 +16,7 @@ MonoBehaviour:
   _blockConfigs:
   - BlockType: 1
     Animator: {fileID: 22100000, guid: 6603cc2f4e7229641bb0e2356c3c0455, type: 2}
+    InitialSprite: {fileID: 21300000, guid: 47514aa8cd5e64f47a38b9a13ead3065, type: 3}
   - BlockType: 2
     Animator: {fileID: 22100000, guid: 01d0027cd5ad38f4abe52031fad3fcbc, type: 2}
+    InitialSprite: {fileID: 21300000, guid: d0799792a1baa484e9471d429e244486, type: 3}

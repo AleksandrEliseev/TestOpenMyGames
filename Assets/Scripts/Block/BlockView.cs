@@ -2,6 +2,7 @@
 using Block.Animations;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GameBoard.Configuration;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,11 +16,12 @@ namespace Block
         public BlockType Type { get; private set; }
         public Vector2Int GridPosition { get;set; }
         
-        public void Initialize(BlockType blockType, AnimatorOverrideController animatorController)
+        public void Initialize(BlockConfigData config)
         {
-            Type = blockType;
-            _animator.SetAnimatorController(animatorController);
-            _animator.PlayIdleAnimation(Random.Range(0f,0.5f));
+            _spriteRenderer.sprite = config.InitialSprite;
+            Type = config.BlockType;
+            _animator.SetAnimatorController(config.Animator);
+            _animator.PlayIdleAnimation(Random.Range(0.25f,1f)).Forget();
         }
         
         public void UpdateGridPosition(Vector2Int gridPosition)
@@ -48,7 +50,7 @@ namespace Block
         public void SetSize(Vector2 size)
         {
             if (_spriteRenderer.sprite == null) return;
-
+            
             Vector2 spriteSize = _spriteRenderer.sprite.bounds.size;
             Vector2 scale = size / spriteSize;
             _spriteRenderer.transform.localScale = new Vector3(scale.x, scale.y, 1);
