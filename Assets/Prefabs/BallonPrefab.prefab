@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minFlySpeed: 0.15
   _maxFlySpeed: 0.5
-  _minFrequency: 0.5
-  _maxFrequency: 2
+  _minFrequency: 0.2
+  _maxFrequency: 0.5
   _minAmplitude: 0.2
   _maxAmplitude: 0.8
 --- !u!114 &5643466122856821214

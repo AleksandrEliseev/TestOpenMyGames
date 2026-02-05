@@ -168,7 +168,7 @@ namespace Ballon
                 ? Random.Range(0.8f, 1.0f)   // right
                 : Random.Range(-1.0f, -0.8f); // left
             
-            float vertical = Random.Range(0.1f, 0.3f);
+            float vertical = Random.Range(-0.5f, 0.5f);
 
             var dir = new Vector2(horizontal, vertical);
             return dir.normalized;
