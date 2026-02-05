@@ -1,4 +1,6 @@
-﻿using Block;
+﻿using Ballon;
+using Ballon.Settings;
+using Block;
 using GameBoard.Configuration;
 using GameBoard.Grid;
 using GameBoard.Level.Settings;
@@ -27,14 +29,22 @@ namespace Installer
         [SerializeField] private LevelTexturesDatabase _levelTexturesDatabase;
         [SerializeField] private BlockConfig _blockConfig;
         [SerializeField] private GridConfig _gridConfig;
+        [SerializeField] private BallonConfig _ballonConfig;
+      
 
         [SerializeField] private Transform _gridTransform;
         [SerializeField] private Transform _blockPoolContainer;
+        [SerializeField] private Transform _ballonPoolContainer;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(_cameraContainer)
                 .AsSelf();
+
+            builder.Register<BallonSpawner>(Lifetime.Singleton)
+                .WithParameter(_ballonConfig)
+                .WithParameter(_ballonPoolContainer)
+                .AsImplementedInterfaces();
 
             builder
                 .Register<PrefsSaveLoadService>(Lifetime.Singleton)
