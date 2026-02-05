@@ -35,7 +35,7 @@ namespace Block.Animations
             return UniTask.WaitUntil(() =>
             {
                 var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-                return stateInfo.IsName(nameof(AnimationState.Destroy)) && stateInfo.normalizedTime >= 1f;
+                return stateInfo.IsName(nameof(AnimationState.Destroy)) && stateInfo.normalizedTime >= 0.99f;
             }, cancellationToken: token);
         }
     }
