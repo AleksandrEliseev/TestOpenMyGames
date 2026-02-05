@@ -42,8 +42,7 @@ namespace Level
                 for (int x = 0; x < newWidth; x++)
                 {
                     int newIndex = y * newWidth + x;
-
-                    // Set border blocks to None
+                    
                     if (x == 0 || x == newWidth - 1)
                     {
                         blockTypes[newIndex] = BlockType.None;

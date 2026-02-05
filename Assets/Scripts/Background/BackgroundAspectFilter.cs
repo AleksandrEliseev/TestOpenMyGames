@@ -1,22 +1,25 @@
+using GameCamera;
 using UnityEngine;
+using VContainer;
 
 public class BackgroundAspectFilter : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    
-    private void Start()
+
+    [Inject]
+    private void Construct(CameraContainer cameraContainer)
     {
-        Camera camera = Camera.main;
+        Camera camera = cameraContainer.GameCamera;
         if (camera == null)
             return;
-
-        // Передаём в метод текущие размеры экрана в юнитах камеры
+        
         float worldScreenHeight = camera.orthographicSize * 2f;
         float worldScreenWidth = worldScreenHeight * camera.aspect;
 
         ResizeToCameraAspect(worldScreenWidth, worldScreenHeight);
     }
-    public void ResizeToCameraAspect(float width, float height)
+  
+    private void ResizeToCameraAspect(float width, float height)
     {
         if (_spriteRenderer == null)
         {
@@ -34,23 +37,18 @@ public class BackgroundAspectFilter : MonoBehaviour
             Debug.LogError("BackgroundAspectFilter: Main Camera not found.");
             return;
         }
-
-        // Размер видимой области камеры в мировых координатах
+        
         float worldScreenHeight = camera.orthographicSize * 2f;
         float worldScreenWidth = worldScreenHeight * camera.aspect;
-
-        // Размер спрайта в мировых координатах
+        
         Sprite sprite = _spriteRenderer.sprite;
-
-        // Размеры спрайта с учетом pixelsPerUnit
+        
         float spriteWidth = sprite.bounds.size.x;
         float spriteHeight = sprite.bounds.size.y;
-
-        // Коэффициенты масштабирования, чтобы перекрыть экран по обеим осям
+        
         float scaleX = worldScreenWidth / spriteWidth;
         float scaleY = worldScreenHeight / spriteHeight;
 
-        // Берем больший коэффициент, чтобы спрайт гарантированно закрывал фон полностью
         float scale = Mathf.Max(scaleX, scaleY);
         
         Vector3 baseScale = Vector3.one;
@@ -64,8 +62,7 @@ public class BackgroundAspectFilter : MonoBehaviour
         Camera camera = Camera.main;
         if (camera == null)
             return;
-
-        // Передаём в метод текущие размеры экрана в юнитах камеры
+        
         float worldScreenHeight = camera.orthographicSize * 2f;
         float worldScreenWidth = worldScreenHeight * camera.aspect;
 

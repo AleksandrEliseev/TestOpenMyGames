@@ -15,6 +15,7 @@ namespace Infrastructure.States
         
         CancellationTokenSource _cancellationTokenSource;
 
+        [Inject]
         public GameStateMachine(IObjectResolver resolver, IGameplaySignals gameplaySignals)
         {
             _gameplaySignals = gameplaySignals;

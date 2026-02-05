@@ -6,6 +6,7 @@ namespace UI.GameplayScreen
     {
         private readonly IObjectResolver _objectResolver;
 
+        [Inject]
         public GameplayScreenPresenterFactory(IObjectResolver objectResolver)
         {
             _objectResolver = objectResolver;

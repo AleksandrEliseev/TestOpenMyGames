@@ -412,6 +412,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 483403611}
+  - {fileID: 578545410}
   _cameraContainer: {fileID: 519420033}
   _levelTexturesDatabase: {fileID: 11400000, guid: 3e917e1935d397e4bb62b9d73a23571f, type: 2}
   _blockConfig: {fileID: 11400000, guid: 6329468294b9b664380d831d0bfd31f8, type: 2}
@@ -754,10 +755,10 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 535747300}
   - {fileID: 519420032}
   - {fileID: 578545412}
   - {fileID: 468835762}
-  - {fileID: 535747300}
   - {fileID: 885405966}
   - {fileID: 1833793856}
   - {fileID: 817817004}

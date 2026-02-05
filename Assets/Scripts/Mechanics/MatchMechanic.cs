@@ -3,7 +3,6 @@ using System.Threading;
 using Block;
 using Cysharp.Threading.Tasks;
 using GameBoard.Grid;
-using UnityEngine;
 using VContainer;
 
 namespace Mechanics
@@ -24,8 +23,6 @@ namespace Mechanics
             _blockFactory = blockFactory;
         }
         
-        
-
         public async UniTask<bool> CheckAndProcessMatches(CancellationToken token)
         {
             var matches = FindMatches();

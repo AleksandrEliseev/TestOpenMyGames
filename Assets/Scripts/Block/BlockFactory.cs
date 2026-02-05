@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameBoard.Configuration;
 using UnityEngine;
+using VContainer;
 using Object = UnityEngine.Object;
 using VContainer.Unity;
 
@@ -22,6 +23,7 @@ namespace Block
         
         private const int InitialPoolSizePerType = 30;
         
+        [Inject]
         public BlockFactory(Transform poolContainer, BlockConfig blockConfig)
         {
             _poolContainer = poolContainer;
