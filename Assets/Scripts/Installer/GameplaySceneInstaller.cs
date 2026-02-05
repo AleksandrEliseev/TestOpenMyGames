@@ -1,4 +1,4 @@
-﻿using Ballon;
+﻿﻿using Ballon;
 using Ballon.Settings;
 using Block;
 using GameBoard.Configuration;
@@ -14,6 +14,7 @@ using Input;
 using Mechanics;
 using Level;
 using SaveLoadService;
+using SaveLoadService.Strategy;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -38,17 +39,21 @@ namespace Installer
 
         protected override void Configure(IContainerBuilder builder)
         {
+            #region SaveSystem
+            
+            builder.Register<JsonSerializer>(Lifetime.Singleton)
+                .As<ISerializer>();
+            
+            builder.Register<PrefsSaveStrategy>(Lifetime.Singleton)
+                .As<ISaveStrategy>();
+            
+            builder.Register<SaveManager>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+            #endregion
+            
             builder.RegisterComponent(_cameraContainer)
                 .AsSelf();
-
-            builder.Register<BallonSpawner>(Lifetime.Singleton)
-                .WithParameter(_ballonConfig)
-                .WithParameter(_ballonPoolContainer)
-                .AsImplementedInterfaces();
-
-            builder
-                .Register<PrefsSaveLoadService>(Lifetime.Singleton)
-                .AsImplementedInterfaces();
 
             builder.Register<GameplaySignals>(Lifetime.Singleton)
                 .As<IGameplaySignals>();
@@ -101,14 +106,19 @@ namespace Installer
                 .AsSelf();
 
             #endregion
-
-
             #region UI
 
             builder.Register<GameplayScreenPresenterFactory>(Lifetime.Singleton)
                 .AsSelf();
 
             #endregion
+            
+            
+            builder.Register<BallonSpawner>(Lifetime.Singleton)
+                .WithParameter(_ballonConfig)
+                .WithParameter(_ballonPoolContainer)
+                .AsImplementedInterfaces();
+
 
             builder.RegisterEntryPoint<GameBootstrapper>();
         }

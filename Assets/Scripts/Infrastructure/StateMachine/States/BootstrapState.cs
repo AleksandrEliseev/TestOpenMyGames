@@ -10,25 +10,25 @@ namespace Infrastructure.StateMachine.States
     public class BootstrapState : IState
     {
         private readonly IGameplaySignals _gameplaySignals;
-        private readonly ILoadService _loadService;
+        private readonly ISaveManager _saveManager;
         private readonly IGameplayModel _gameplayModel;
          
         [Inject]
         public BootstrapState(
             IGameplaySignals gameplaySignals,
-            ILoadService loadService,
+            ISaveManager saveManager,
             IGameplayModel gameplayModel
         )
         {
             _gameplaySignals = gameplaySignals;
-            _loadService = loadService;
+            _saveManager = saveManager;
             _gameplayModel = gameplayModel;
         }
 
         public async UniTask Enter(CancellationToken token)
         {
             Debug.Log("Bootstrap State Entered");
-            _gameplayModel.CurrentLevel = _loadService.GetCurrentLevel();
+            _gameplayModel.CurrentLevel = _saveManager.GetCurrentLevel();
             _gameplaySignals.RequestStateChange<LoadLevelState>();
         }
 

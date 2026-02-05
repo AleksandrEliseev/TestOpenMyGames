@@ -15,7 +15,7 @@ namespace Infrastructure.StateMachine.States
         private readonly IInputSystem _inputSystem;
         private readonly ISwapMechanic _swapMechanic;
         private readonly IGameplayModel _gameplayModel;
-        private readonly ISaveService _saveService;
+        private readonly ISaveManager _saveManager;
         private readonly IGridManager _gridManager;
         private readonly IGameplaySignals _gameplaySignals;
 
@@ -25,7 +25,7 @@ namespace Infrastructure.StateMachine.States
             IInputSystem inputSystem,
             ISwapMechanic swapMechanic,
             IGameplayModel gameplayModel,
-            ISaveService saveService,
+            ISaveManager saveManager,
             IGridManager gridManager,
             IGameplaySignals gameplaySignals
             )
@@ -33,7 +33,7 @@ namespace Infrastructure.StateMachine.States
             _inputSystem = inputSystem;
             _swapMechanic = swapMechanic;
             _gameplayModel = gameplayModel;
-            _saveService = saveService;
+            _saveManager = saveManager;
             _gridManager = gridManager;
             _gameplaySignals = gameplaySignals;
         }
@@ -57,13 +57,13 @@ namespace Infrastructure.StateMachine.States
             _swapMechanic.OnSwapEnded -= OnSwapEnded;
             _swapMechanic.DestroyAnimations();
             _gridManager.ClearGrid();
-            _saveService.ClearLevelData();
+            _saveManager.ClearLevelData();
             return UniTask.CompletedTask;
         }
 
         private void OnSwapEnded()
         {
-            _saveService.UpdateLevelData(new SaveLevelData()
+            _saveManager.UpdateLevelData(new SaveLevelData()
             {
                 LevelNumber = _gameplayModel.CurrentLevel,
                 LevelModel = _gridManager.GetLevelModelFromGrid()

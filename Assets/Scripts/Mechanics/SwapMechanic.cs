@@ -26,7 +26,7 @@ namespace Mechanics
         private readonly IGridManager _gridManager;
         private readonly IInputSystem _inputSystem;
         private readonly IMatchMechanic _matchMechanic;
-        private readonly ISaveService _saveService;
+        private readonly ISaveManager _saveManager;
         private readonly IGameplayModel _gameplayModel;
         private readonly IGameplaySignals _gameplaySignals;
 
@@ -42,7 +42,7 @@ namespace Mechanics
             IGridManager gridManager,
             IInputSystem inputSystem,
             IMatchMechanic matchMechanic,
-            ISaveService saveService,
+            ISaveManager saveManager,
             IGameplayModel gameplayModel,
             IGameplaySignals gameplaySignals
         )
@@ -50,7 +50,7 @@ namespace Mechanics
             _gridManager = gridManager;
             _inputSystem = inputSystem;
             _matchMechanic = matchMechanic;
-            _saveService = saveService;
+            _saveManager = saveManager;
             _gameplayModel = gameplayModel;
             _gameplaySignals = gameplaySignals;
         }

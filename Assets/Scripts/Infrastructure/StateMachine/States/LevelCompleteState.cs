@@ -11,7 +11,7 @@ namespace Infrastructure.StateMachine.States
     {
         private readonly IGameplaySignals _gameplaySignals;
         private readonly IGameplayModel _gameplayModel;
-        private readonly ISaveService _saveService;
+        private readonly ISaveManager _saveManager;
         private readonly IGridManager _gridManager;
 
         [Inject]
@@ -19,12 +19,12 @@ namespace Infrastructure.StateMachine.States
             IGameplaySignals gameplaySignals,
             IGameplayModel gameplayModel,
             IGridManager gridManager,
-            ISaveService saveService
+            ISaveManager saveManager
         )
         {
             _gameplaySignals = gameplaySignals;
             _gameplayModel = gameplayModel;
-            _saveService = saveService;
+            _saveManager = saveManager;
         }
 
         public UniTask Enter(CancellationToken token)

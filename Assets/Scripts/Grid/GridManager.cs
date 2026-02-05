@@ -20,7 +20,7 @@ namespace GameBoard.Grid
     public class GridManager : IGridManager 
     {
         private readonly ILevelParser _levelParser;
-        private readonly ILoadService _loadService;
+        private readonly ISaveManager _saveManager;
         private readonly IBlockFactory _blockFactory;
         private readonly IGridScaler _gridScaler;
         private readonly GridConfig _gridConfig;
@@ -30,14 +30,14 @@ namespace GameBoard.Grid
         [Inject]
         public GridManager(
             ILevelParser levelParser,
-            ILoadService loadService,
+            ISaveManager saveManager,
             IBlockFactory blockFactory,
             IGridScaler gridScaler,
             GridConfig gridConfig
         )
         {
             _levelParser = levelParser;
-            _loadService = loadService;
+            _saveManager = saveManager;
             _blockFactory = blockFactory;
             _gridScaler = gridScaler;
             _gridConfig = gridConfig;
@@ -76,7 +76,7 @@ namespace GameBoard.Grid
 
         private void TryToCreateGridModel(int levelNumber)
         {
-            LevelModel levelModel = _loadService.TryToLoadLevel(levelNumber, out SaveLevelData levelData)
+            LevelModel levelModel = _saveManager.TryToLoadLevel(levelNumber, out SaveLevelData levelData)
                 ? levelData.LevelModel 
                 : _levelParser.ParseLevel(levelNumber);
             
