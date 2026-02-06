@@ -50,8 +50,8 @@ MonoBehaviour:
   _maxFlySpeed: 0.5
   _minFrequency: 0.2
   _maxFrequency: 0.5
-  _minAmplitude: 0.2
-  _maxAmplitude: 0.8
+  _minAmplitude: 0.1
+  _maxAmplitude: 0.4
 --- !u!114 &5643466122856821214
 MonoBehaviour:
   m_ObjectHideFlags: 0
