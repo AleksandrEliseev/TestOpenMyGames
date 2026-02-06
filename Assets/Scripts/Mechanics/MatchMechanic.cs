@@ -115,8 +115,14 @@ namespace Mechanics
         {
             if (block != null)
             {
-                await block.AnimateDestruction(token);
-                _blockFactory.ReturnBlock(block);
+                try
+                {
+                    await block.AnimateDestruction(token);
+                }
+                finally
+                {
+                    _blockFactory.ReturnBlock(block);
+                }
             }
         }
     }
