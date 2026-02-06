@@ -48,8 +48,6 @@ namespace Ballon
                 ballon.gameObject.SetActive(false);
                 _ballonPool.Enqueue(ballon);
             }
-            
-            ResetSpawnTimer();
         }
         
         public void Tick()
@@ -112,7 +110,7 @@ namespace Ballon
 
             return pos.x < _leftBound - margin ||
                    pos.x > _rightBound + margin ||
-                   pos.y < _bottomBound - margin ||
+                   pos.y < _bottomBound - margin *2 ||
                    pos.y > _topBound + margin * 2;
         }
 
@@ -168,7 +166,7 @@ namespace Ballon
                 ? Random.Range(0.8f, 1.0f)   // right
                 : Random.Range(-1.0f, -0.8f); // left
             
-            float vertical = Random.Range(-0.5f, 0.5f);
+            float vertical = Random.Range(-0.25f, 0.25f);
 
             var dir = new Vector2(horizontal, vertical);
             return dir.normalized;
